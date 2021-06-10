@@ -4,14 +4,14 @@ from PIL import Image
 import numpy as np
 
 st.title("OpenCV Deep Learning based Face Detection")
-modelFile = "res10_300x300_ssd_iter_140000_fp16.caffemodel"
-configFile = "deploy.prototxt"
-net = cv2.dnn.readNetFromCaffe(configFile, modelFile)
 
-def col(n):
-    x = [1 for _ in range(n)]
-    c  = st.beta_columns(x)
-    return c
+@st.cache(allow_output_mutation=True)
+def load_model():
+    modelFile = "res10_300x300_ssd_iter_140000_fp16.caffemodel"
+    configFile = "deploy.prototxt"
+    net = cv2.dnn.readNetFromCaffe(configFile, modelFile)
+    return net
+    
 
 def detectFaceOpenCVDnn(net, frame, framework="caffe", conf_threshold=0.5):
     frameOpencvDnn = frame.copy()
@@ -44,11 +44,12 @@ def detectFaceOpenCVDnn(net, frame, framework="caffe", conf_threshold=0.5):
 
 
 uploaded_file = st.file_uploader("Choose a file", type =['jpg','jpeg','jfif','png'])
+net = load_model()
 if uploaded_file is not None:
     image = np.array(Image.open(uploaded_file))
     image = cv2.resize(image, (350,350))
     
-    placeholders = col(2)
+    placeholders = st.beta_columns(2)
     placeholders[0].image(image)
     conf_threshold = st.slider("SET Confidence Threshold", min_value = 0.01, max_value = 1.0, step = .01, value=0.5)
     out_image,_ = detectFaceOpenCVDnn(net, image, conf_threshold=conf_threshold)
