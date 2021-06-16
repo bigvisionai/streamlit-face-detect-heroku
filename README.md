@@ -1,2 +1,3 @@
-# streamlit-digit-recognizer-heroku
-OpenCV Webinar Series | Digit Recognizer using OpenCV and Streamlit
+## OpenCV Webinar Series | Face Detector using OpenCV and Streamlit
+
+Demo: https://streamlit-face-detect.herokuapp.com/
