@@ -47,7 +47,6 @@ uploaded_file = st.file_uploader("Choose a file", type =['jpg','jpeg','jfif','pn
 net = load_model()
 if uploaded_file is not None:
     image = np.array(Image.open(uploaded_file))
-    image = cv2.resize(image, (350,350))
     
     placeholders = st.beta_columns(2)
     placeholders[0].image(image)
