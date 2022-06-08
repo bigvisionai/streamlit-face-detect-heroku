@@ -46,7 +46,7 @@ def detectFaceOpenCVDnn(net, frame, framework="caffe", conf_threshold=0.5):
 uploaded_file = st.file_uploader("Choose a file", type =['jpg','jpeg','jfif','png'])
 net = load_model()
 if uploaded_file is not None:
-    image = np.array(Image.open(uploaded_file))
+    image = np.array(Image.open(uploaded_file))[..., :3]
     
     placeholders = st.beta_columns(2)
     placeholders[0].image(image)
